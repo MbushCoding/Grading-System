@@ -1,54 +1,98 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ro">
 <head>
     <meta charset="UTF-8">
-    <title>Student grading</title>
-    <link rel="stylesheet" type="text/css" href="css/style.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-            crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-            crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-            crossorigin="anonymous"></script>
+    <title>Students grading</title>
+<!--    TODO: put something here-->
+    <link rel='icon' href='img/favicon.ico' type='image/x-icon' />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="login/vendor/bootstrap/css/bootstrap.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="login/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="login/fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="login/vendor/animate/animate.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="login/vendor/css-hamburgers/hamburgers.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="login/vendor/animsition/css/animsition.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="login/vendor/select2/select2.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="login/vendor/daterangepicker/daterangepicker.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="login/css/util.css">
+    <link rel="stylesheet" type="text/css" href="login/css/main.css">
+    <!--===============================================================================================-->
 </head>
 <body>
 <?php
 session_start();
-if (isset($_SESSION['username'])) {
-    header("Location: index.php");
-}
-?>
-<form class="form-signin" action="login.php" method="POST">
-    <img class="mb-4" id="logo-login" src="images/teacher.svg" alt="logo" height="175">
-    <h1 class="h3 mb-3 font-weight-normal" id="sign-in">Please sign in</h1>
-    <label for="inputEmail" class="sr-only">Email address</label>
-    <input type="email" id="inputEmail" name="email" class="form-control" placeholder="Email address" required
-           autofocus>
-    <label for="inputPassword" class="sr-only">Password</label>
-    <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required>
-    <label id="badCredentials"
-    <div class="checkbox mb-3">
-        <label>
-            <input type="checkbox" value="remember-me"> Remember me
-        </label>
-    </div>
-    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-    <p class="mt-5 mb-3 text-muted">&copy; 2019</p>
-</form>
-</body>
-</html>
-
-<?php
 if (isset($_POST['email']) && isset($_POST['password'])) {
     //TODO: connect to db, check the credentials
     //redirect to idex if all is fine
     //enalbe bad credentials label in case of not
-    header("Location: index2.php");
+    $_SESSION['email']=$_POST['email'];
+    header("Location: dashboard.php");
+}
+if (isset ($_SESSION['email'])){
+    header("Location: dashboard.php");
 }
 ?>
+<div class="limiter">
+    <div class="container-login100">
+        <div class="wrap-login100">
+            <div class="login100-form-title" id="login100-form-title">
+					<span class="login100-form-title-1">
+						Log in
+					</span>
+            </div>
+            <form method="post" class="login100-form validate-form" action="login.php">
+                <div class="wrap-input100 validate-input m-b-26" data-validate="Email is required">
+                    <span class="label-input100">Email</span>
+                    <input class="input100" type="text" name="email" placeholder="Enter email">
+                    <span class="focus-input100"></span>
+                </div>
 
+                <div class="wrap-input100 validate-input m-b-18" data-validate = "Password is required">
+                    <span class="label-input100">Password</span>
+                    <input class="input100" type="password" name="password" placeholder="Enter password">
+                    <span class="focus-input100"></span>
+                </div>
+                <div class="flex-sb-m w-full p-b-30">
+<!--                    <div>-->
+<!--                        <a href="#" class="txt1">-->
+<!--                            Forgot Password?-->
+<!--                        </a>-->
+<!--                    </div>-->
+                </div>
+                <div class="container-login100-form-btn">
+                    <button class="login100-form-btn">
+                        Login
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!--===============================================================================================-->
+<script src="login/vendor/jquery/jquery-3.2.1.min.js"></script>
+<!--===============================================================================================-->
+<script src="login/vendor/animsition/js/animsition.min.js"></script>
+<!--===============================================================================================-->
+<script src="login/vendor/bootstrap/js/popper.js"></script>
+<script src="login/vendor/bootstrap/js/bootstrap.min.js"></script>
+<!--===============================================================================================-->
+<script src="login/vendor/select2/select2.min.js"></script>
+<!--===============================================================================================-->
+<script src="login/vendor/daterangepicker/moment.min.js"></script>
+<script src="login/vendor/daterangepicker/daterangepicker.js"></script>
+<!--===============================================================================================-->
+<script src="login/vendor/countdowntime/countdowntime.js"></script>
+<!--===============================================================================================-->
+<script src="login/js/main.js"></script>
+</body>
+</html>

@@ -20,7 +20,10 @@
 <h1>Hello there</h1>
 <?php
 session_start();
-
+if (!isset($_SESSION['email'])){
+    header("Location: login.php");
+}
+header("Location: dashboard.php");
 ?>
 </body>
 </html>
