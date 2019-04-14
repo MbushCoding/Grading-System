@@ -25,3 +25,10 @@ CREATE TABLE student(
     grade DOUBLE(4, 3),
     FOREIGN KEY(student_id) REFERENCES student(id)
 );
+
+ALTER TABLE teacher
+ADD password VARCHAR(30) NOT NULL;
+
+ALTER TABLE teacher
+ADD email VARCHAR(30) NOT NULL;
+

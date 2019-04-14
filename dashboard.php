@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Student grading</title>
+    <title>Dashboard</title>
     <link rel="stylesheet" href="css/style4.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 </head>
@@ -11,16 +11,16 @@
 
 //TODO: check session here
 session_start();
-//if (!isset($_SESSION['username'])){
-//    header("Location: login.php");
-//}
+if (!isset($_SESSION['email'])){
+    header("Location: login.php");
+}
 ?>
 <div class="wrapper">
     <!-- Sidebar Holder -->
     <nav id="sidebar">
         <div class="sidebar-header">
-            <h3>Bootstrap Sidebar</h3>
-            <strong>BS</strong>
+            <h3>Teacher Dashboard</h3>
+            <strong>TD</strong>
         </div>
 
         <ul class="list-unstyled components">
@@ -42,12 +42,11 @@ session_start();
                 </a>
                 <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">
                     <i class="glyphicon glyphicon-duplicate"></i>
-                    Pages
+                    Reports
                 </a>
                 <ul class="collapse list-unstyled" id="pageSubmenu">
-                    <li><a href="#">Page 1</a></li>
-                    <li><a href="#">Page 2</a></li>
-                    <li><a href="#">Page 3</a></li>
+                    <li><a href="#">Schoolar situation</a></li>
+                    <li><a href="#">Teaching activity</a></li>
                 </ul>
             </li>
             <li>
@@ -59,13 +58,13 @@ session_start();
             <li>
                 <a href="#">
                     <i class="glyphicon glyphicon-paperclip"></i>
-                    FAQ
+                    Course files
                 </a>
             </li>
             <li>
                 <a href="#">
                     <i class="glyphicon glyphicon-send"></i>
-                    Contact
+                    Email access
                 </a>
             </li>
         </ul>
