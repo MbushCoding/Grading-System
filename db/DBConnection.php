@@ -1,4 +1,5 @@
 <?php
+require_once 'Classes/TeacherDTO.php';
 function connectToDB()
 {
     $servername = "localhost";
@@ -17,14 +18,17 @@ function connectToDB()
 
 function checkEmailAndPassword($email, $password)
 {
-    $sql = "SELECT email, password FROM teacher";
+    $sql = "SELECT * FROM teacher WHERE email=\"" . $email . "\" AND password=\"" . $password . "\"";
     $conn = connectToDB();
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
         // output data of each row
         while ($row = $result->fetch_assoc()) {
             if ($row["email"] == $email && $row["password"] == $password) {
+                //TODO: replace this with $_SESSION['currentUser']
                 $_SESSION['email'] = $_POST['email'];
+                $teacher = new TeacherDTO($row['id'], $row['first_name'], $row['last_name'], $row['email']);
+                $_SESSION['currentUser'] = serialize($teacher);
                 $conn->close();
                 return 1;
             }
@@ -34,16 +38,38 @@ function checkEmailAndPassword($email, $password)
     return 0;
 }
 
-function insertStudent($firstName, $lastname, $email, $class)
+function insertStudent($firstName, $lastname, $email, $class, $course)
 {
     $sql = "INSERT INTO student VALUES (NULL,\"$firstName\", \"$lastname\", \"$email\", \"$class\")";
-    echo $sql;
     $conn = connectToDB();
-
-//    TODO: create a popup instead of using echos
     if ($conn->query($sql) === TRUE) {
-        echo 'Successfully';
+        //    TODO: get the id for current STUDENT & inseert into student2course
+        $sql = "SELECT id FROM student WHERE email=\"" . $email . "\"";
+        $result = $conn->query($sql);
+        $studentId = -1;
+        if ($result->num_rows > 0) {
+            $studentId = $result->fetch_assoc()['id'];
+        }
+        //echo $studentId;
+        $sql = "SELECT id FROM course WHERE course_name=\"" . $course . "\"";
+        $result = $conn->query($sql);
+        $courseId = -1;
+        if ($result->num_rows > 0) {
+            $courseId = $result->fetch_assoc()['id'];
+        }
+       // echo $courseId;
+        if (-1 != $studentId && -1 != $courseId) {
+//            Insert into student2course -> Enroll student
+            $sql = "INSERT INTO student2course VALUES(" . $studentId . ", " . $courseId . ")";
+            if ($conn->query($sql) === TRUE) {
+                //    TODO: create a popup instead of using echos
+                echo 'Successfully added & enrolled student';
+            }
+        }
     } else {
-        Echo 'An error occurred';
+        //    TODO: create a popup instead of using echos
+        echo 'An error occurred';
     }
+    $conn->close();
+    return;
 }

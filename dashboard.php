@@ -23,7 +23,7 @@ if (!isset($_SESSION['email'])) {
 
         <ul class="list-unstyled components">
             <li class="active">
-                <a href="dashboard.php data-toggle collapse" aria-expanded="false">
+                <a href="dashboard.php" aria-expanded="false">
                     <i class="glyphicon glyphicon-home"></i>
                     Home
                 </a>

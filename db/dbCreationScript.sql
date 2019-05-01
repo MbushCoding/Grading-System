@@ -1,4 +1,7 @@
-CREATE TABLE student
+CREATE DATABASE IF NOT EXISTS `students_grading` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `students_grading`;
+
+CREATE TABLE IF NOT EXISTS student
 (
     id         INT(4) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     first_name VARCHAR(30) NOT NULL,
@@ -6,20 +9,26 @@ CREATE TABLE student
     email      VARCHAR(30) NOT NULL,
     class      VARCHAR(10) NOT NULL
 );
-CREATE TABLE teacher
+
+CREATE TABLE IF NOT EXISTS teacher
 (
     id         INT(4) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     first_name VARCHAR(30) NOT NULL,
-    last_name  VARCHAR(30) NOT NULL
+    last_name  VARCHAR(30) NOT NULL,
+    password   VARCHAR(30) NOT NULL,
+    email      VARCHAR(30) NOT NULL
+
 );
-CREATE TABLE course
+
+CREATE TABLE IF NOT EXISTS course
 (
     id          INT(4) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     teacher_id  INT(4) UNSIGNED,
     course_name VARCHAR(30) NOT NULL,
     FOREIGN KEY (teacher_id) REFERENCES teacher (id)
 );
-CREATE TABLE student2course
+
+CREATE TABLE IF NOT EXISTS student2course
 (
     student_id INT(4) UNSIGNED,
     course_id  INT(4) UNSIGNED,
@@ -27,21 +36,87 @@ CREATE TABLE student2course
     FOREIGN KEY (student_id) REFERENCES student (id),
     FOREIGN KEY (course_id) REFERENCES course (id)
 );
-CREATE TABLE grade_book
+
+CREATE TABLE IF NOT EXISTS grade_book
 (
     academic_year VARCHAR(9) PRIMARY KEY,
     student_id    INT(4) UNSIGNED,
     grade         DOUBLE(4, 3),
     FOREIGN KEY (student_id) REFERENCES student (id)
 );
-
-ALTER TABLE teacher
-    ADD password VARCHAR(30) NOT NULL;
-
-ALTER TABLE teacher
-    ADD email VARCHAR(30) NOT NULL;
-
 ALTER TABLE student
     ADD CONSTRAINT studentEmailUnique UNIQUE (email);
 
+ALTER TABLE grade_book
+    ADD CONSTRAINT gradeBookGradeValid CHECK (grade > 0 AND grade <= 10);
+
+INSERT INTO teacher
+VALUES (NULL, "John", "Smith", "passwordjs", "john.smith@mail.com");
+
+INSERT INTO teacher
+VALUES (NULL, "James", "Killian", "passworkjk", "john.killian@mit.edu");
+
+INSERT INTO teacher
+VALUES (NULL, "Ann", "Graybiel", "passworkag", "ann.graybiel@yahoo.com");
+
+INSERT INTO teacher
+VALUES (NULL, "Ron", "Rivest", "passwordrr", "ronrivest@uti.com");
+
+INSERT INTO teacher
+VALUES (NULL, "Bruno", "Rossi", "passwordbr", "bruno.rossi@ucla.com");
+
+INSERT INTO student
+VALUES (NULL, "George", "Bush", "gbush@white-house.gov", "2004A");
+
+INSERT INTO student
+VALUES (NULL, "Barack", "Obama", "bobama@democratic.gov", "2009B");
+
+INSERT INTO student
+VALUES (NULL, "Doanld", "Trump", "trump@monkey.gov", "2017A");
+
+INSERT INTO student
+VALUES (NULL, "Vladimir", "Putin", "putin@kgb.ru", "2000");
+
+INSERT INTO student
+VALUES (NULL, "Kim", "Jong-un", "kim@nuclear.army", "2012");
+
+INSERT INTO course
+VALUES (NULL, 1, "Nuclear army");
+
+INSERT INTO course
+VALUES (NULL, 1, "Make Koreea great again");
+
+INSERT INTO course
+VALUES (NULL, 2, "How to be a real russian");
+
+INSERT INTO course
+VALUES (NULL, 4, "Do nothing for the country");
+
+INSERT INTO course
+VALUES (NULL, 2, "Be a no-one like a boss");
+
+INSERT into student2course
+VALUES (4, 1);
+
+INSERT into student2course
+VALUES (5, 1);
+
+INSERT into student2course
+VALUES (2, 1);
+
+INSERT into student2course
+VALUES (1, 2);
+
+INSERT into student2course
+VALUES (4, 2);
+
+INSERT into student2course
+VALUES (1, 4);
+
+INSERT into student2course
+VALUES (1, 5);
+
+INSERT into student2course
+VALUES (4, 3);
 -- Add some constraints
+# Add some grades for the presidents

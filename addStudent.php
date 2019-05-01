@@ -9,13 +9,14 @@
 <body>
 <?php
 session_start();
+require_once('Classes/TeacherDTO.php');
 if (!isset($_SESSION['email'])) {
     header("Location: login.php");
 }
 if (isset($_POST['email'])) {
     //connect to DB, insert & get response
     require('db/DBConnection.php');
-    insertStudent($_POST['firstName'], $_POST['lastName'], $_POST['email'], $_POST['class']);
+    insertStudent($_POST['firstName'], $_POST['lastName'], $_POST['email'], $_POST['class'], $_POST['course']);
 
 }
 ?>
@@ -29,7 +30,7 @@ if (isset($_POST['email'])) {
 
         <ul class="list-unstyled components">
             <li>
-                <a href="dashboard.php data-toggle collapse" aria-expanded="false">
+                <a href="dashboard.php" aria-expanded="false">
                     <i class="glyphicon glyphicon-home"></i>
                     Home
                 </a>
@@ -109,6 +110,7 @@ if (isset($_POST['email'])) {
             anim id est laborum.</p>
 
         <!--        TODO: make this fields required-->
+        <!--        TODO: add course option-->
         <form action="addStudent.php" method="POST">
             <div class="form-group">
                 <label for="addStudent-firstName">First name</label>
@@ -129,14 +131,29 @@ if (isset($_POST['email'])) {
                 <label for="addStudent-email">Email address</label>
                 <input type="email" class="form-control" id="addStudent-email" placeholder="Enter email" name="email">
             </div>
+            <div class="form-group">
+                <label for="course">Course</label>
+                <select class="form-control" id="course" name="course">
+                    <?php
+                    $teacher = unserialize($_SESSION['currentUser']);
+                    $courses = $teacher->getCourses();
+                    foreach ($courses as $course) {
+                        ?>
+                        <option><?php echo $course ?></option>
+                        <?php
+                    }
+                    ?>
+                </select>
+            </div>
             <div class="form-check">
                 <input type="checkbox" class="form-check-input" id="gdpr-check">
                 <label class="form-check-label" for="gdpr-check">Agree with GDPR rules</label>
             </div>
             <button type="submit" class="btn btn-primary" id="submit-button">Add</button>
         </form>
-    </div>
 
+
+    </div>
 </div>
 
 
