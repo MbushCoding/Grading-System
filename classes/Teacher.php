@@ -1,7 +1,7 @@
 <?php
 
 
-class TeacherDTO
+class Teacher
 {
     private $id;
     private $firstName;
@@ -15,17 +15,13 @@ class TeacherDTO
      * @param $lastName
      * @param $email
      */
+
     public function __construct($id, $firstName, $lastName, $email)
     {
         $this->id = $id;
         $this->firstName = $firstName;
         $this->lastName = $lastName;
         $this->email = $email;
-    }
-
-    private function connect()
-    {
-        $this->link = new PDO($this->id, $this->firstName, $this->lastName, $this->email);
     }
 
     /**
@@ -114,5 +110,10 @@ class TeacherDTO
         }
         $conn->close();
         return -1;
+    }
+
+    private function connect()
+    {
+        $this->link = new PDO($this->id, $this->firstName, $this->lastName, $this->email);
     }
 }

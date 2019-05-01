@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Dashboard</title>
-    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/collapsable.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 </head>
 <body>
 <?php
 session_start();
-require_once('Classes/TeacherDTO.php');
+require_once('classes/Teacher.php');
 if (!isset($_SESSION['email'])) {
     header("Location: login.php");
 }
@@ -42,10 +42,8 @@ if (isset($_POST['email'])) {
                 </a>
                 <ul class="list-unstyled" id="homeSubmenu">
                     <li class="active">
-                        <?php if (basename($_SERVER["SCRIPT_FILENAME"], '.php') == 'addStudent') echo '<b>' ?>
-                        <a href="addStudent.php">Add student</a></li>
-                    <?php if (basename($_SERVER["SCRIPT_FILENAME"], '.php') == 'addStudent') echo '</b>' ?>
-                    <li><a href="#">Student attendance</a></li>
+                        <a href="addStudent.php"><b>Add student</b></a></li>
+                    <li><a href="studentAttendance.php">Student attendance</a></li>
                     <li><a href="#">Grades</a></li>
                 </ul>
                 <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">

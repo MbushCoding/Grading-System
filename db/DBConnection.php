@@ -1,5 +1,5 @@
 <?php
-require_once 'Classes/TeacherDTO.php';
+require_once 'classes/Teacher.php';
 function connectToDB()
 {
     $servername = "localhost";
@@ -27,7 +27,7 @@ function checkEmailAndPassword($email, $password)
             if ($row["email"] == $email && $row["password"] == $password) {
                 //TODO: replace this with $_SESSION['currentUser']
                 $_SESSION['email'] = $_POST['email'];
-                $teacher = new TeacherDTO($row['id'], $row['first_name'], $row['last_name'], $row['email']);
+                $teacher = new Teacher($row['id'], $row['first_name'], $row['last_name'], $row['email']);
                 $_SESSION['currentUser'] = serialize($teacher);
                 $conn->close();
                 return 1;

@@ -9,9 +9,12 @@
 <body>
 <?php
 session_start();
-if (!isset($_SESSION['email'])) {
+if (!isset($_SESSION['currentUser'])) {
     header("Location: login.php");
 }
+require('classes/Teacher.php');
+require_once('classes/Course.php');
+require_once('classes/Student.php');
 ?>
 <div class="wrapper">
     <!-- Sidebar Holder -->
@@ -22,7 +25,7 @@ if (!isset($_SESSION['email'])) {
         </div>
 
         <ul class="list-unstyled components">
-            <li class="active">
+            <li>
                 <a href="dashboard.php" aria-expanded="false">
                     <i class="glyphicon glyphicon-home"></i>
                     Home
@@ -33,9 +36,9 @@ if (!isset($_SESSION['email'])) {
                     <i class="glyphicon glyphicon-briefcase"></i>
                     Grade book
                 </a>
-                <ul class="collapse list-unstyled" id="homeSubmenu">
+                <ul class="list-unstyled" id="homeSubmenu">
                     <li><a href="addStudent.php">Add student</a></li>
-                    <li><a href="studentAttendance.php">Student attendance</a></li>
+                    <li><a href="#"><b>Student attendance</b></a></li>
                     <li><a href="#">Grades</a></li>
                 </ul>
                 <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">
@@ -98,38 +101,44 @@ if (!isset($_SESSION['email'])) {
             ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
             nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
             anim id est laborum.</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-            ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-            nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
-            anim id est laborum.</p>
-
         <div class="line"></div>
+        <?php
+        $teacher = unserialize($_SESSION['currentUser']);
+        $courses = $teacher->getCourses();
+        foreach ($courses
 
-        <h2>Lorem Ipsum Dolor</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-            ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-            nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
-            anim id est laborum.</p>
-
-        <div class="line"></div>
-
-        <h2>Lorem Ipsum Dolor</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-            ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-            nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
-            anim id est laborum.</p>
-
-        <div class="line"></div>
-
-        <h3>Lorem Ipsum Dolor</h3>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-            ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-            nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
-            anim id est laborum.</p>
+                 as $courseName) {
+            $course = new Course();
+            $course->setCourseName($courseName);
+            ?>
+            <h1>Students enrolled @ <?php echo $courseName ?></h1>
+            <table class="table">
+                <thead class="thead-dark">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">First name</th>
+                    <th scope="col">Last name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Class</th>
+                </tr>
+                </thead>
+                <tbody>
+                <?
+                $students = unserialize($course->getEnrolledStudents());
+                foreach ($students as $student) {
+                    $studObj = (unserialize($student));
+                    echo "<tr>";
+                    echo "<th scope=\"row\">" . $studObj->getId() . "</th>";
+                    echo "<td>" . $studObj->getFirstName() . "</td>";
+                    echo "<td>" . $studObj->getLastName() . "</td>";
+                    echo "<td>" . $studObj->getEmail() . "</td>";
+                    echo "<td>" . $studObj->getClass() . "</td>";
+                    echo "</tr>";
+                }
+                ?>
+                </tbody>
+            </table>
+        <?php } ?>
     </div>
 </div>
 
