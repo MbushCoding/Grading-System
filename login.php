@@ -35,8 +35,6 @@ require('db/DBConnection.php');
 if (isset ($_SESSION['email'])) {
     header("Location: dashboard.php");
 } else if (isset($_POST['email']) && isset($_POST['password'])) {
-//TODO: connect to db, check the credentials
-//redirect to idex if all is fine
     if (1 == checkEmailAndPassword($_POST['email'], $_POST['password'])) {
         header("Location: dashboard.php");
     } else {
@@ -67,14 +65,14 @@ if (isset ($_SESSION['email'])) {
 
                 <div class="flex-sb-m w-full p-b-30" id="bad-credentials"></div>
                 <script>
-                    let badCredentials=0;
+                    let badCredentials = 0;
                     badCredentials =<?php
-                        if (isset($_SESSION['loginError'])) {
-                            echo $_SESSION['loginError'];
-                        }else {
-                            echo '0';
-                        }
-                        ?>;
+                    if (isset($_SESSION['loginError'])) {
+                        echo $_SESSION['loginError'];
+                    } else {
+                        echo '0';
+                    }
+                    ?>;
                     console.log(badCredentials);
                     if (badCredentials) {
                         activateBadCredentialsLabel();

@@ -5,7 +5,7 @@ function connectToDB()
     $username = "root";
     $password = "";
     $dbname = "students_grading";
-    $port="3307";
+    $port = "3307";
 // Create connection
     $conn = new mysqli($servername, $username, $password, $dbname, $port);
 // Check connection
@@ -24,7 +24,7 @@ function checkEmailAndPassword($email, $password)
         // output data of each row
         while ($row = $result->fetch_assoc()) {
             if ($row["email"] == $email && $row["password"] == $password) {
-                $_SESSION['email']=$_POST['email'];
+                $_SESSION['email'] = $_POST['email'];
                 $conn->close();
                 return 1;
             }
@@ -32,4 +32,18 @@ function checkEmailAndPassword($email, $password)
     }
     $conn->close();
     return 0;
+}
+
+function insertStudent($firstName, $lastname, $email, $class)
+{
+    $sql = "INSERT INTO student VALUES (NULL,\"$firstName\", \"$lastname\", \"$email\", \"$class\")";
+    echo $sql;
+    $conn = connectToDB();
+
+//    TODO: create a popup instead of using echos
+    if ($conn->query($sql) === TRUE) {
+        echo 'Successfully';
+    } else {
+        Echo 'An error occurred';
+    }
 }

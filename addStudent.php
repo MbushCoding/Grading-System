@@ -12,6 +12,12 @@ session_start();
 if (!isset($_SESSION['email'])) {
     header("Location: login.php");
 }
+if (isset($_POST['email'])) {
+    //connect to DB, insert & get response
+    require('db/DBConnection.php');
+    insertStudent($_POST['firstName'], $_POST['lastName'], $_POST['email'], $_POST['class']);
+
+}
 ?>
 <div class="wrapper">
     <!-- Sidebar Holder -->
@@ -22,7 +28,7 @@ if (!isset($_SESSION['email'])) {
         </div>
 
         <ul class="list-unstyled components">
-            <li class="active">
+            <li>
                 <a href="dashboard.php data-toggle collapse" aria-expanded="false">
                     <i class="glyphicon glyphicon-home"></i>
                     Home
@@ -33,8 +39,11 @@ if (!isset($_SESSION['email'])) {
                     <i class="glyphicon glyphicon-briefcase"></i>
                     Grade book
                 </a>
-                <ul class="collapse list-unstyled" id="homeSubmenu">
-                    <li><a href="addStudent.php">Add student</a></li>
+                <ul class="list-unstyled" id="homeSubmenu">
+                    <li class="active">
+                        <?php if (basename($_SERVER["SCRIPT_FILENAME"], '.php') == 'addStudent') echo '<b>' ?>
+                        <a href="addStudent.php">Add student</a></li>
+                    <?php if (basename($_SERVER["SCRIPT_FILENAME"], '.php') == 'addStudent') echo '</b>' ?>
                     <li><a href="#">Student attendance</a></li>
                     <li><a href="#">Grades</a></li>
                 </ul>
@@ -92,45 +101,42 @@ if (!isset($_SESSION['email'])) {
             </div>
         </nav>
 
-        <h2>Collapsible Sidebar Using Bootstrap 3</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-            ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-            nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
-            anim id est laborum.</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-            ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-            nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
-            anim id est laborum.</p>
-
-        <div class="line"></div>
-
-        <h2>Lorem Ipsum Dolor</h2>
+        <h2>Add a student</h2>
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
             dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
             ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
             nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
             anim id est laborum.</p>
 
-        <div class="line"></div>
-
-        <h2>Lorem Ipsum Dolor</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-            ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-            nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
-            anim id est laborum.</p>
-
-        <div class="line"></div>
-
-        <h3>Lorem Ipsum Dolor</h3>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-            ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-            nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
-            anim id est laborum.</p>
+        <!--        TODO: make this fields required-->
+        <form action="addStudent.php" method="POST">
+            <div class="form-group">
+                <label for="addStudent-firstName">First name</label>
+                <input type="text" class="form-control" id="addStudent-firstName" placeholder="First name"
+                       name="firstName">
+            </div>
+            <div class="form-group">
+                <label for="addStudent-lastName">Last name</label>
+                <input type="text" class="form-control" id="addStudent-lastName" placeholder="Last name"
+                       name="lastName">
+            </div>
+            <div class="form-group">
+                <!--                TODO: change this to a drop menu-->
+                <label for="addStudent-class">Class</label>
+                <input type="text" class="form-control" id="addStudent-class" placeholder="Class" name="class">
+            </div>
+            <div class="form-group">
+                <label for="addStudent-email">Email address</label>
+                <input type="email" class="form-control" id="addStudent-email" placeholder="Enter email" name="email">
+            </div>
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="gdpr-check">
+                <label class="form-check-label" for="gdpr-check">Agree with GDPR rules</label>
+            </div>
+            <button type="submit" class="btn btn-primary" id="submit-button">Add</button>
+        </form>
     </div>
+
 </div>
 
 
