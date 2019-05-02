@@ -4,11 +4,21 @@
     font-family: 'Poppins', sans-serif;
 }
 
-.dismissStudent{
-    display:inline;
+.dismissStudent {
+    display: inline;
 }
-.editStudent{
-    display:inline;
+
+.editStudent {
+    display: inline;
+}
+
+#log-out-button {
+    float: right;
+}
+
+#navbar-header {
+    width: 100%;
+    margin: auto;
 }
 
 #submit-button {
@@ -20,7 +30,7 @@
     color: #fff;
 }
 
-.wrapper{
+.wrapper {
     max-width: 100%;
 }
 
