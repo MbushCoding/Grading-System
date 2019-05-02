@@ -5,6 +5,7 @@
     <title>Student attendance</title>
     <link rel="stylesheet" href="css/collapsable.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="js/scripts.js"></script>
 </head>
 <body>
 <?php
@@ -138,7 +139,6 @@ require_once('classes/Student.php');
                         echo "<td id=\"class$studID\">" . $studObj->getClass() . "</td>";
                         ?>
                         <td>
-                            <!--                            Trebuie să fie ceva cu un câmp hidden sau ceva de genul-->
                             <form method="GET" action="editStudent.php" class="editStudent">
                                 <button type="submit" id="editStudent<?= $studObj->getId() ?>"
                                         class="btn btn-success btn-md">
@@ -146,9 +146,13 @@ require_once('classes/Student.php');
                                 </button>
                                 <input type="hidden" name="studentId" value="<?= $studObj->getId() ?>">
                             </form>
-                            <!--                            Add a message for are u sure & if it' checked, redirect to that-->
-                            <form method="GET" action="dismissStudent.php" class="dismissStudent">
-                                <button type="button" class="btn btn-danger btn-md">Dismiss</button>
+                            <form method="GET" action="dismissStudent.php" class="dismissStudent"
+                                  id="dismissStudentForm<?= $studObj->getId() ?>">
+                                <input type="hidden" name="studentId" value="<?= $studObj->getId() ?>">
+                                <button type="button" class="btn btn-danger btn-md"
+                                        onclick="addConfirmationPopup(<?= $studObj->getId() ?>)">
+                                    Dismiss
+                                </button>
                             </form>
                         </td>
                     </tr>
