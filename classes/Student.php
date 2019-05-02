@@ -89,5 +89,21 @@ class Student
         $this->class = $class;
     }
 
-
+    public function getStudentById($id){
+        require_once('db/DBConnection.php');
+        $sql = "SELECT * FROM student WHERE id=\"" . $id . "\"";
+        $conn = connectToDB();
+        $result = $conn->query($sql);
+        if ($result->num_rows ==1 ) {
+            while ($row=$result->fetch_assoc()){
+                $this->setId($id);
+                $this->setFirstName($row['first_name']);
+                $this->setLastName($row['last_name']);
+                $this->setEmail($row['email']);
+                $this->setClass($row['class']);
+            }
+            return $this;
+        }
+        return -1;
+    }
 }

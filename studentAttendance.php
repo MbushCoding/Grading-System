@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Dashboard</title>
+    <title>Student attendance</title>
     <link rel="stylesheet" href="css/collapsable.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 </head>
@@ -115,7 +115,7 @@ require_once('classes/Student.php');
             <table class="table">
                 <thead class="thead-dark">
                 <tr>
-                    <th scope="col">#</th>
+                    <th scope="col">Student ID</th>
                     <th scope="col">First name</th>
                     <th scope="col">Last name</th>
                     <th scope="col">Email</th>
@@ -127,21 +127,37 @@ require_once('classes/Student.php');
                 $students = unserialize($course->getEnrolledStudents());
                 foreach ($students as $student) {
                     $studObj = (unserialize($student));
-                    echo "<tr>";
-                    echo "<th scope=\"row\">" . $studObj->getId() . "</th>";
-                    echo "<td>" . $studObj->getFirstName() . "</td>";
-                    echo "<td>" . $studObj->getLastName() . "</td>";
-                    echo "<td>" . $studObj->getEmail() . "</td>";
-                    echo "<td>" . $studObj->getClass() . "</td>";
-                    echo "</tr>";
-                }
-                ?>
+                    $studID = $studObj->getId();
+                    ?>
+                    <tr>
+                        <?php
+                        echo "<th scope=\"row\" id=\"id$studID\">" . $studObj->getId() . "</th>";
+                        echo "<td id=\"firstName$studID\">" . $studObj->getFirstName() . "</td>";
+                        echo "<td id=\"lastName$studID\">" . $studObj->getLastName() . "</td>";
+                        echo "<td id=\"email$studID\">" . $studObj->getEmail() . "</td>";
+                        echo "<td id=\"class$studID\">" . $studObj->getClass() . "</td>";
+                        ?>
+                        <td>
+                            <!--                            Trebuie să fie ceva cu un câmp hidden sau ceva de genul-->
+                            <form method="GET" action="editStudent.php" class="editStudent">
+                                <button type="submit" id="editStudent<?= $studObj->getId() ?>"
+                                        class="btn btn-success btn-md">
+                                    Edit
+                                </button>
+                                <input type="hidden" name="studentId" value="<?= $studObj->getId() ?>">
+                            </form>
+                            <!--                            Add a message for are u sure & if it' checked, redirect to that-->
+                            <form method="GET" action="dismissStudent.php" class="dismissStudent">
+                                <button type="button" class="btn btn-danger btn-md">Dismiss</button>
+                            </form>
+                        </td>
+                    </tr>
+                <?php } ?>
                 </tbody>
             </table>
         <?php } ?>
     </div>
 </div>
-
 
 <!-- jQuery CDN -->
 <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>

@@ -60,7 +60,7 @@ class Course
         require_once('db/DBConnection.php');
         $this->getIDForCourseName();
         $sql = "SELECT s.id, s.first_name, s.last_name, s.email, s.class FROM student s, student2course"
-            . " WHERE course_id=$this->id AND student_id=s.id";
+            . " WHERE course_id=$this->id AND student_id=s.id ORDER BY s.id ASC";
         $conn = connectToDB();
         $students[0]= 0;
         $iterator = 0;
