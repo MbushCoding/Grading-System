@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS course
     id          INT(4) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     teacher_id  INT(4) UNSIGNED,
     course_name VARCHAR(30) NOT NULL,
-    FOREIGN KEY (teacher_id) REFERENCES teacher (id)
+    FOREIGN KEY (teacher_id) REFERENCES teacher (id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS student2course
@@ -33,8 +33,8 @@ CREATE TABLE IF NOT EXISTS student2course
     student_id INT(4) UNSIGNED,
     course_id  INT(4) UNSIGNED,
     PRIMARY KEY (student_id, course_id),
-    FOREIGN KEY (student_id) REFERENCES student (id),
-    FOREIGN KEY (course_id) REFERENCES course (id)
+    FOREIGN KEY (student_id) REFERENCES student (id) ON DELETE CASCADE,
+    FOREIGN KEY (course_id) REFERENCES course (id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS grade_book
@@ -42,8 +42,17 @@ CREATE TABLE IF NOT EXISTS grade_book
     academic_year VARCHAR(9) PRIMARY KEY,
     student_id    INT(4) UNSIGNED,
     grade         DOUBLE(4, 3),
-    FOREIGN KEY (student_id) REFERENCES student (id)
+    FOREIGN KEY (student_id) REFERENCES student (id) ON DELETE CASCADE
+#     FOREIGN KEY (academic_yead) REFERENCES academic_year
 );
+
+CREATE TABLE IF NOT EXISTS thesis
+(
+    student_id INT(4) UNSIGNED PRIMARY KEY,
+    title      VARCHAR(25),
+    FOREIGN KEY (student_id) REFERENCES student (id) ON DELETE CASCADE
+);
+
 ALTER TABLE student
     ADD CONSTRAINT studentEmailUnique UNIQUE (email);
 
@@ -118,5 +127,20 @@ VALUES (1, 5);
 
 INSERT into student2course
 VALUES (4, 3);
+
+INSERT INTO thesis
+VALUES (1, "How to be a great president");
+
+INSERT INTO thesis
+VALUES(2, "How I killed Osama bin Laden");
+
+INSERT INTO thesis
+VALUE (3, "Short introduction in oranges history");
+
+INSERT INTO thesis
+VALUES(4, "I'm the gas boss");
+
+INSERT INTO thesis
+VALUES(5, "I will smile on any situation");
 -- Add some constraints
 # Add some grades for the presidents
