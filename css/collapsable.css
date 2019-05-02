@@ -4,6 +4,13 @@
     font-family: 'Poppins', sans-serif;
 }
 
+.dismissStudent{
+    display:inline;
+}
+.editStudent{
+    display:inline;
+}
+
 #submit-button {
     background-color: #4ea63f;
     border-color: #4ea63f;
