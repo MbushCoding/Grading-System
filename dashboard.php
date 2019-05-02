@@ -16,6 +16,11 @@ if (!isset($_SESSION['email'])) {
 <div class="wrapper">
     <!-- Sidebar Holder -->
     <nav id="sidebar">
+        <script type="text/javascript">
+            if (localStorage.getItem('#sidebar') == 'active'){
+                document.getElementById("sidebar").classList.add('active');
+            }
+        </script>
         <div class="sidebar-header">
             <h3>Teacher Dashboard</h3>
             <strong>TD</strong>
@@ -50,7 +55,7 @@ if (!isset($_SESSION['email'])) {
             <li>
                 <a href="#">
                     <i class="glyphicon glyphicon-link"></i>
-                    Portfolio
+                    Students thesis
                 </a>
             </li>
             <li>
@@ -76,17 +81,19 @@ if (!isset($_SESSION['email'])) {
     <div id="content">
         <nav class="navbar navbar-default">
             <div class="container-fluid">
-                <div class="navbar-header">
+                <div class="navbar-header" id="navbar-header">
                     <button type="button" id="sidebarCollapse" class="btn btn-info navbar-btn">
                         <i class="glyphicon glyphicon-align-left"></i>
                         <span>Toggle Sidebar</span>
                     </button>
-                </div>
-                <!--                TODO: don't hide this on resize-->
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a href="logout.php">Log out</a></li>
-                    </ul>
+                    <!--                </div>-->
+                    <!--                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">-->
+                    <a href="logout.php">
+                        <button type="button" class="btn btn-info navbar-btn" id="log-out-button">Log out</button>
+                    </a>
+                    <!--
+                                        <ul class="nav navbar-nav navbar-right">
+                     </ul>-->
                 </div>
 
             </div>
@@ -143,6 +150,12 @@ if (!isset($_SESSION['email'])) {
     $(document).ready(function () {
         $('#sidebarCollapse').on('click', function () {
             $('#sidebar').toggleClass('active');
+            if ('active' == document.getElementById("sidebar").classList[0]) {
+                window.localStorage.setItem('#sidebar', 'active');
+            }
+            else{
+                window.localStorage.setItem('#sidebar', 'inactive');
+            }
         });
     });
 </script>

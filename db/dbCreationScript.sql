@@ -37,19 +37,19 @@ CREATE TABLE IF NOT EXISTS student2course
     FOREIGN KEY (course_id) REFERENCES course (id) ON DELETE CASCADE
 );
 
+# TODO: need to fix '' case
 CREATE TABLE IF NOT EXISTS grade_book
 (
-    academic_year VARCHAR(9) PRIMARY KEY,
+    academic_year ENUM ('2019-2020', '2018-2019', '2017-2018', '2016-2017') PRIMARY KEY,
     student_id    INT(4) UNSIGNED,
     grade         DOUBLE(4, 3),
     FOREIGN KEY (student_id) REFERENCES student (id) ON DELETE CASCADE
-#     FOREIGN KEY (academic_yead) REFERENCES academic_year
 );
 
 CREATE TABLE IF NOT EXISTS thesis
 (
     student_id INT(4) UNSIGNED PRIMARY KEY,
-    title      VARCHAR(25),
+    title      VARCHAR(50),
     FOREIGN KEY (student_id) REFERENCES student (id) ON DELETE CASCADE
 );
 
@@ -60,7 +60,7 @@ ALTER TABLE grade_book
     ADD CONSTRAINT gradeBookGradeValid CHECK (grade > 0 AND grade <= 10);
 
 INSERT INTO teacher
-VALUES (NULL, "John", "Smith", "passwordjs", "john.smith@mail.com");
+VALUES (NULL, "John", "Smith", "123", "john.smith@mail.com");
 
 INSERT INTO teacher
 VALUES (NULL, "James", "Killian", "passworkjk", "john.killian@mit.edu");
@@ -132,15 +132,15 @@ INSERT INTO thesis
 VALUES (1, "How to be a great president");
 
 INSERT INTO thesis
-VALUES(2, "How I killed Osama bin Laden");
+VALUES (2, "How I killed Osama bin Laden");
 
 INSERT INTO thesis
-VALUE (3, "Short introduction in oranges history");
+    VALUE (3, "Short introduction in oranges history");
 
 INSERT INTO thesis
-VALUES(4, "I'm the gas boss");
+VALUES (4, "I'm the gas boss");
 
 INSERT INTO thesis
-VALUES(5, "I will smile on any situation");
+VALUES (5, "I will smile on any situation");
 -- Add some constraints
 # Add some grades for the presidents

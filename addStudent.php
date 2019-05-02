@@ -17,12 +17,16 @@ if (isset($_POST['email'])) {
     //connect to DB, insert & get response
     require('db/DBConnection.php');
     insertStudent($_POST['firstName'], $_POST['lastName'], $_POST['email'], $_POST['class'], $_POST['course']);
-
 }
 ?>
 <div class="wrapper">
     <!-- Sidebar Holder -->
     <nav id="sidebar">
+        <script type="text/javascript">
+            if (localStorage.getItem('#sidebar') == 'active') {
+                document.getElementById("sidebar").classList.add('active');
+            }
+        </script>
         <div class="sidebar-header">
             <h3>Teacher Dashboard</h3>
             <strong>TD</strong>
@@ -58,7 +62,7 @@ if (isset($_POST['email'])) {
             <li>
                 <a href="#">
                     <i class="glyphicon glyphicon-link"></i>
-                    Portfolio
+                    Students thesis
                 </a>
             </li>
             <li>
@@ -159,14 +163,17 @@ if (isset($_POST['email'])) {
 <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
 <!-- Bootstrap Js CDN -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
 <script type="text/javascript">
     $(document).ready(function () {
         $('#sidebarCollapse').on('click', function () {
             $('#sidebar').toggleClass('active');
+            if ('active' == document.getElementById("sidebar").classList[0]) {
+                window.localStorage.setItem('#sidebar', 'active');
+            } else {
+                window.localStorage.setItem('#sidebar', 'inactive');
+            }
         });
     });
 </script>
 </body>
 </html>
-
