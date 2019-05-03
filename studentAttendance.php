@@ -111,59 +111,63 @@ require_once('classes/Student.php');
         <?php
         $teacher = unserialize($_SESSION['currentUser']);
         $courses = $teacher->getCourses();
-        foreach ($courses
-
-                 as $courseName) {
+        foreach ($courses as $courseName) {
             $course = new Course();
             $course->setCourseName($courseName);
-            ?>
-            <h1>Students enrolled @ <?php echo $courseName ?></h1>
-            <table class="table">
-                <thead class="thead-dark">
-                <tr>
-                    <th scope="col">Student ID</th>
-                    <th scope="col">First name</th>
-                    <th scope="col">Last name</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Class</th>
-                </tr>
-                </thead>
-                <tbody>
-                <?
-                $students = unserialize($course->getEnrolledStudents());
-                foreach ($students as $student) {
-                    $studObj = (unserialize($student));
-                    $studID = $studObj->getId();
-                    ?>
+            $academicYear = '2018-2019';
+            $students = unserialize($course->getEnrolledStudentsForAcademicYear($academicYear));
+            if (-1 == $students) {
+                ?>
+                <h1>No student enrolled @ <?php echo $courseName . " " . $academicYear ?></h1>
+            <?php } else {
+                ?>
+                <h1>Students enrolled @ <?php echo $courseName . " " . $academicYear ?></h1>
+                <table class="table">
+                    <thead class="thead-dark">
                     <tr>
-                        <?php
-                        echo "<th scope=\"row\" id=\"id$studID\">" . $studObj->getId() . "</th>";
-                        echo "<td id=\"firstName$studID\">" . $studObj->getFirstName() . "</td>";
-                        echo "<td id=\"lastName$studID\">" . $studObj->getLastName() . "</td>";
-                        echo "<td id=\"email$studID\">" . $studObj->getEmail() . "</td>";
-                        echo "<td id=\"class$studID\">" . $studObj->getClass() . "</td>";
-                        ?>
-                        <td>
-                            <form method="GET" action="editStudent.php" class="editStudent">
-                                <button type="submit" id="editStudent<?= $studObj->getId() ?>"
-                                        class="btn btn-success btn-md">
-                                    Edit
-                                </button>
-                                <input type="hidden" name="studentId" value="<?= $studObj->getId() ?>">
-                            </form>
-                            <form method="GET" action="dismissStudent.php" class="dismissStudent"
-                                  id="dismissStudentForm<?= $studObj->getId() ?>">
-                                <input type="hidden" name="studentId" value="<?= $studObj->getId() ?>">
-                                <button type="button" class="btn btn-danger btn-md"
-                                        onclick="addConfirmationPopup(<?= $studObj->getId() ?>)">
-                                    Dismiss
-                                </button>
-                            </form>
-                        </td>
+                        <th scope="col">Student ID</th>
+                        <th scope="col">First name</th>
+                        <th scope="col">Last name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Class</th>
                     </tr>
-                <?php } ?>
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                    <?
+                    foreach ($students as $student) {
+                        $studObj = (unserialize($student));
+                        $studID = $studObj->getId();
+                        ?>
+                        <tr>
+                            <?php
+                            echo "<th scope=\"row\" id=\"id$studID\">" . $studObj->getId() . "</th>";
+                            echo "<td id=\"firstName$studID\">" . $studObj->getFirstName() . "</td>";
+                            echo "<td id=\"lastName$studID\">" . $studObj->getLastName() . "</td>";
+                            echo "<td id=\"email$studID\">" . $studObj->getEmail() . "</td>";
+                            echo "<td id=\"class$studID\">" . $studObj->getClass() . "</td>";
+                            ?>
+                            <td>
+                                <form method="GET" action="editStudent.php" class="editStudent">
+                                    <button type="submit" id="editStudent<?= $studObj->getId() ?>"
+                                            class="btn btn-success btn-md">
+                                        Edit
+                                    </button>
+                                    <input type="hidden" name="studentId" value="<?= $studObj->getId() ?>">
+                                </form>
+                                <form method="GET" action="dismissStudent.php" class="dismissStudent"
+                                      id="dismissStudentForm<?= $studObj->getId() ?>">
+                                    <input type="hidden" name="studentId" value="<?= $studObj->getId() ?>">
+                                    <button type="button" class="btn btn-danger btn-md"
+                                            onclick="addConfirmationPopup(<?= $studObj->getId() ?>)">
+                                        Dismiss
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    <?php } ?>
+                    </tbody>
+                </table>
+            <?php } ?>
         <?php } ?>
     </div>
 </div>

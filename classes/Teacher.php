@@ -116,4 +116,7 @@ class Teacher
     {
         $this->link = new PDO($this->id, $this->firstName, $this->lastName, $this->email);
     }
+
+
+    //TODO: function to enroll a student to one of my courses, for an academic year
 }

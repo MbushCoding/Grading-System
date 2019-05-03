@@ -55,30 +55,32 @@ class Course
         $this->courseName = $courseName;
     }
 
-    public function getEnrolledStudents()
+    public function getEnrolledStudentsForAcademicYear($academicYear)
     {
         require_once('db/DBConnection.php');
         $this->getIDForCourseName();
         $sql = "SELECT s.id, s.first_name, s.last_name, s.email, s.class FROM student s, student2course"
-            . " WHERE course_id=$this->id AND student_id=s.id ORDER BY s.id ASC";
+            . " WHERE course_id=$this->id AND student_id=s.id AND student2course.academic_year=\""
+            . $academicYear . "\"ORDER BY s.id ASC";
         $conn = connectToDB();
-        $students[0]= 0;
+        $students[0] = 0;
         $iterator = 0;
         $result = $conn->query($sql);
         if ($result->num_rows > 0) {
             // output data of each row
             while ($row = $result->fetch_assoc()) {
-                $student=new Student();
+                $student = new Student();
                 $student->setId($row['id']);
                 $student->setFirstName($row['first_name']);
                 $student->setLastName($row['last_name']);
                 $student->setEmail($row['email']);
                 $student->setClass($row['class']);
-                $students[$iterator]=serialize($student);
+                $students[$iterator] = serialize($student);
                 $iterator++;
             }
             return serialize($students);
         }
+        return serialize(-1);
     }
 
     private function getIDForCourseName()

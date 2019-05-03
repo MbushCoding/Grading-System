@@ -1,3 +1,4 @@
+DROP database IF EXISTS students_grading;
 CREATE DATABASE IF NOT EXISTS `students_grading` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 USE `students_grading`;
 
@@ -30,8 +31,9 @@ CREATE TABLE IF NOT EXISTS course
 
 CREATE TABLE IF NOT EXISTS student2course
 (
-    student_id INT(4) UNSIGNED,
-    course_id  INT(4) UNSIGNED,
+    student_id    INT(4) UNSIGNED,
+    course_id     INT(4) UNSIGNED,
+    academic_year ENUM ('2019-2020', '2018-2019', '2017-2018', '2016-2017') DEFAULT '2018-2019' NOT NULL,
     PRIMARY KEY (student_id, course_id),
     FOREIGN KEY (student_id) REFERENCES student (id) ON DELETE CASCADE,
     FOREIGN KEY (course_id) REFERENCES course (id) ON DELETE CASCADE
@@ -105,28 +107,28 @@ INSERT INTO course
 VALUES (NULL, 2, "Be a no-one like a boss");
 
 INSERT into student2course
-VALUES (4, 1);
+VALUES (4, 1, '2016-2017');
 
 INSERT into student2course
-VALUES (5, 1);
+VALUES (5, 1, '2019-2020');
 
 INSERT into student2course
-VALUES (2, 1);
+VALUES (2, 1, '2019-2020');
 
 INSERT into student2course
-VALUES (1, 2);
+VALUES (1, 2, '2019-2020');
 
 INSERT into student2course
-VALUES (4, 2);
+VALUES (4, 2, '2019-2020');
 
 INSERT into student2course
-VALUES (1, 4);
+VALUES (1, 4, '2019-2020');
 
 INSERT into student2course
-VALUES (1, 5);
+VALUES (1, 5, '2019-2020');
 
 INSERT into student2course
-VALUES (4, 3);
+VALUES (4, 3, '2019-2020');
 
 INSERT INTO thesis
 VALUES (1, "How to be a great president");

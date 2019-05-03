@@ -57,10 +57,10 @@ function insertStudent($firstName, $lastname, $email, $class, $course)
         if ($result->num_rows > 0) {
             $courseId = $result->fetch_assoc()['id'];
         }
-       // echo $courseId;
+        // echo $courseId;
         if (-1 != $studentId && -1 != $courseId) {
 //            Insert into student2course -> Enroll student
-            $sql = "INSERT INTO student2course VALUES(" . $studentId . ", " . $courseId . ")";
+            $sql = "INSERT INTO student2course VALUES(" . $studentId . ", " . $courseId . ", '2018-2019')";
             if ($conn->query($sql) === TRUE) {
                 //    TODO: create a popup instead of using echos
                 echo 'Successfully added & enrolled student';
