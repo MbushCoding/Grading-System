@@ -78,10 +78,6 @@ if (isset($_POST['email'])) {
                 </a>
             </li>
         </ul>
-        <!--        <ul class="list-unstyled CTAs">-->
-        <!--            <li><a href="https://bootstrapious.com/tutorial/files/sidebar.zip" class="download">Download source</a></li>-->
-        <!--            <li><a href="https://bootstrapious.com/p/bootstrap-sidebar" class="article">Back to article</a></li>-->
-        <!--        </ul>-->
     </nav>
 
     <!-- Page Content Holder -->
@@ -94,7 +90,6 @@ if (isset($_POST['email'])) {
                         <span>Toggle Sidebar</span>
                     </button>
                 </div>
-                <!--                TODO: don't hide this on resize-->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="logout.php">Log out</a></li>
@@ -103,7 +98,6 @@ if (isset($_POST['email'])) {
 
             </div>
         </nav>
-
         <h2>Add a student</h2>
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
             dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
@@ -111,31 +105,29 @@ if (isset($_POST['email'])) {
             nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
             anim id est laborum.</p>
 
-        <!--        TODO: make this fields required-->
-        <!--        TODO: add course option-->
         <form action="addStudent.php" method="POST">
             <div class="form-group">
                 <label for="addStudent-firstName">First name</label>
                 <input type="text" class="form-control" id="addStudent-firstName" placeholder="First name"
-                       name="firstName">
+                       name="firstName" required>
             </div>
             <div class="form-group">
                 <label for="addStudent-lastName">Last name</label>
                 <input type="text" class="form-control" id="addStudent-lastName" placeholder="Last name"
-                       name="lastName">
+                       name="lastName" required>
             </div>
             <div class="form-group">
-                <!--                TODO: change this to a drop menu-->
                 <label for="addStudent-class">Class</label>
-                <input type="text" class="form-control" id="addStudent-class" placeholder="Class" name="class">
+                <input type="text" class="form-control" id="addStudent-class" placeholder="Class" name="class" required>
             </div>
             <div class="form-group">
                 <label for="addStudent-email">Email address</label>
-                <input type="email" class="form-control" id="addStudent-email" placeholder="Enter email" name="email">
+                <input type="email" class="form-control" id="addStudent-email" placeholder="Enter email" name="email"
+                       required>
             </div>
             <div class="form-group">
                 <label for="course">Course</label>
-                <select class="form-control" id="course" name="course">
+                <select class="form-control" id="course" name="course" required>
                     <?php
                     $teacher = unserialize($_SESSION['currentUser']);
                     $courses = $teacher->getCourses();
@@ -148,10 +140,10 @@ if (isset($_POST['email'])) {
                 </select>
             </div>
             <div class="form-check">
-                <input type="checkbox" class="form-check-input" id="gdpr-check">
+                <input type="checkbox" class="form-check-input" id="gdpr-check" required>
                 <label class="form-check-label" for="gdpr-check">Agree with GDPR rules</label>
             </div>
-            <button type="submit" class="btn btn-primary" id="submit-button">Add</button>
+            <button type="submit" class="btn btn-primary" id="addStudent-button">Add</button>
         </form>
 
 

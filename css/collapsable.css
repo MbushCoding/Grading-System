@@ -1,5 +1,11 @@
 @import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
 /*@arci*/
+
+#addStudent-button{
+    background-color: #4ea63f;
+    border-color: #4ea63f;
+    width:150px;
+}
 #sidebar {
     font-family: 'Poppins', sans-serif;
 }

@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="ro">
 <head>
@@ -30,7 +33,6 @@
 </head>
 <body>
 <?php
-session_start();
 require('db/DBConnection.php');
 if (isset ($_SESSION['email'])) {
     header("Location: dashboard.php");

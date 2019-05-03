@@ -1,3 +1,4 @@
+
 DROP database IF EXISTS students_grading;
 CREATE DATABASE IF NOT EXISTS `students_grading` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 USE `students_grading`;
