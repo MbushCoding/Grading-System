@@ -48,7 +48,7 @@ if (isset($_POST['email'])) {
                     <li class="active">
                         <a href="addStudent.php"><b>Add student</b></a></li>
                     <li><a href="studentAttendance.php">Student attendance</a></li>
-                    <li><a href="#">Grades</a></li>
+                    <li><a href="grades.php">Grades</a></li>
                 </ul>
                 <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">
                     <i class="glyphicon glyphicon-duplicate"></i>

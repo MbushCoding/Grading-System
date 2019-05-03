@@ -42,10 +42,13 @@ CREATE TABLE IF NOT EXISTS student2course
 # TODO: need to fix '' case
 CREATE TABLE IF NOT EXISTS grade_book
 (
-    academic_year ENUM ('2019-2020', '2018-2019', '2017-2018', '2016-2017') PRIMARY KEY,
+    academic_year ENUM ('2019-2020', '2018-2019', '2017-2018', '2016-2017') NOT NULL,
     student_id    INT(4) UNSIGNED,
-    grade         DOUBLE(4, 3),
-    FOREIGN KEY (student_id) REFERENCES student (id) ON DELETE CASCADE
+    course_id INT(4) UNSIGNED,
+    grade         DOUBLE(4, 2),
+    PRIMARY KEY (student_id, course_id),
+    FOREIGN KEY (student_id) REFERENCES student (id) ON DELETE CASCADE,
+    FOREIGN KEY (course_id) REFERENCES course (id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS thesis
@@ -107,28 +110,28 @@ INSERT INTO course
 VALUES (NULL, 2, "Be a no-one like a boss");
 
 INSERT into student2course
-VALUES (4, 1, '2016-2017');
+VALUES (4, 1, '2018-2019');
 
 INSERT into student2course
-VALUES (5, 1, '2019-2020');
+VALUES (5, 1, '2018-2019');
 
 INSERT into student2course
-VALUES (2, 1, '2019-2020');
+VALUES (2, 1, '2018-2019');
 
 INSERT into student2course
-VALUES (1, 2, '2019-2020');
+VALUES (1, 2, '2018-2019');
 
 INSERT into student2course
-VALUES (4, 2, '2019-2020');
+VALUES (4, 2, '2018-2019');
 
 INSERT into student2course
-VALUES (1, 4, '2019-2020');
+VALUES (1, 4, '2018-2019');
 
 INSERT into student2course
-VALUES (1, 5, '2019-2020');
+VALUES (1, 5, '2018-2019');
 
 INSERT into student2course
-VALUES (4, 3, '2019-2020');
+VALUES (4, 3, '2018-2019');
 
 INSERT INTO thesis
 VALUES (1, "How to be a great president");

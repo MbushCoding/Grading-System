@@ -41,7 +41,7 @@ if (!isset($_SESSION['email'])) {
                 <ul class="collapse list-unstyled" id="homeSubmenu">
                     <li><a href="addStudent.php">Add student</a></li>
                     <li><a href="studentAttendance.php">Student attendance</a></li>
-                    <li><a href="#">Grades</a></li>
+                    <li><a href="grades.php">Grades</a></li>
                 </ul>
                 <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">
                     <i class="glyphicon glyphicon-duplicate"></i>

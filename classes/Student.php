@@ -12,22 +12,6 @@ class Student
     /**
      * @return mixed
      */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * @param mixed $id
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
-
-    /**
-     * @return mixed
-     */
     public function getFirstName()
     {
         return $this->firstName;
@@ -89,13 +73,14 @@ class Student
         $this->class = $class;
     }
 
-    public function getStudentById($id){
+    public function getStudentById($id)
+    {
         require_once('db/DBConnection.php');
         $sql = "SELECT * FROM student WHERE id=\"" . $id . "\"";
         $conn = connectToDB();
         $result = $conn->query($sql);
-        if ($result->num_rows ==1 ) {
-            while ($row=$result->fetch_assoc()){
+        if ($result->num_rows == 1) {
+            while ($row = $result->fetch_assoc()) {
                 $this->setId($id);
                 $this->setFirstName($row['first_name']);
                 $this->setLastName($row['last_name']);
@@ -106,4 +91,44 @@ class Student
         }
         return -1;
     }
+
+    public function getGradeForCourse($courseID)
+    {
+        require_once('db/DBConnection.php');
+        $sql = "SELECT grade FROM grade_book WHERE student_id=\"" . $this->id . "\" AND course_id=\"" . $courseID . "\"";
+        $conn = connectToDB();
+        $result = $conn->query($sql);
+        if ($result->num_rows == 1) {
+            return ($result->fetch_assoc())['grade'];
+        }
+        return -1;
+    }
+
+    public function setGradeForCourse($courseId, $grade, $academicYear)
+    {
+        require_once('db/DBConnection.php');
+        $sql = "INSERT INTO grade_book VALUES(" . "\"$academicYear\", " . "\"" . $this->getId()
+            . "\", " . $courseId . ", " . "$grade)" . "ON DUPLICATE KEY UPDATE grade=$grade";
+        $conn = connectToDB();
+        $result = $conn->query($sql);
+        return $result;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param mixed $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
 }
+
+?>

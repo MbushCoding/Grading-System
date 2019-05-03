@@ -2,20 +2,17 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Student attendance</title>
+    <title>Dashboard</title>
     <link rel="stylesheet" href="css/collapsable.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="js/scripts.js"></script>
 </head>
 <body>
 <?php
 session_start();
-if (!isset($_SESSION['currentUser'])) {
+if (!isset($_SESSION['email'])) {
     header("Location: login.php");
 }
-require('classes/Teacher.php');
-require_once('classes/Course.php');
-require_once('classes/Student.php');
+$academicYear = '2018-2019';
 ?>
 <div class="wrapper">
     <!-- Sidebar Holder -->
@@ -44,8 +41,8 @@ require_once('classes/Student.php');
                 </a>
                 <ul class="list-unstyled" id="homeSubmenu">
                     <li><a href="addStudent.php">Add student</a></li>
-                    <li><a href="studentAttendance.php"><b>Student attendance</b></a></li>
-                    <li><a href="grades.php">Grades</a></li>
+                    <li><a href="studentAttendance.php">Student attendance</a></li>
+                    <li><a href="grades.php"><b>Grades</b></a></li>
                 </ul>
                 <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">
                     <i class="glyphicon glyphicon-duplicate"></i>
@@ -75,27 +72,19 @@ require_once('classes/Student.php');
                 </a>
             </li>
         </ul>
-        <!--        <ul class="list-unstyled CTAs">-->
-        <!--            <li><a href="https://bootstrapious.com/tutorial/files/sidebar.zip" class="download">Download source</a></li>-->
-        <!--            <li><a href="https://bootstrapious.com/p/bootstrap-sidebar" class="article">Back to article</a></li>-->
-        <!--        </ul>-->
     </nav>
 
-    <!-- Page Content Holder -->
     <div id="content">
         <nav class="navbar navbar-default">
             <div class="container-fluid">
-                <div class="navbar-header">
+                <div class="navbar-header" id="navbar-header">
                     <button type="button" id="sidebarCollapse" class="btn btn-info navbar-btn">
                         <i class="glyphicon glyphicon-align-left"></i>
                         <span>Toggle Sidebar</span>
                     </button>
-                </div>
-                <!--                TODO: don't hide this on resize-->
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a href="logout.php">Log out</a></li>
-                    </ul>
+                    <a href="logout.php">
+                        <button type="button" class="btn btn-info navbar-btn" id="log-out-button">Log out</button>
+                    </a>
                 </div>
 
             </div>
@@ -107,21 +96,28 @@ require_once('classes/Student.php');
             ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
             nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
             anim id est laborum.</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+            ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+            nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
+            anim id est laborum.</p>
         <div class="line"></div>
         <?php
+        require_once('classes/Teacher.php');
+        require_once('classes/Student.php');
+        require_once('classes/Course.php');
         $teacher = unserialize($_SESSION['currentUser']);
         $courses = $teacher->getCourses();
         foreach ($courses as $courseName) {
             $course = new Course();
             $course->setCourseName($courseName);
-            $academicYear = '2018-2019';
             $students = unserialize($course->getEnrolledStudentsForAcademicYear($academicYear));
             if (-1 == $students) {
                 ?>
                 <h1>No student enrolled @ <?php echo $courseName . " " . $academicYear ?></h1>
             <?php } else {
                 ?>
-                <h1>Students enrolled @ <?php echo $courseName . " " . $academicYear ?></h1>
+                <h2>Grades for students enrolled @ <?php echo $courseName . " " . $academicYear ?></h2>
                 <table class="table">
                     <thead class="thead-dark">
                     <tr>
@@ -130,6 +126,7 @@ require_once('classes/Student.php');
                         <th scope="col">Last name</th>
                         <th scope="col">Email</th>
                         <th scope="col">Class</th>
+                        <th scope="col">Grade</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -140,42 +137,46 @@ require_once('classes/Student.php');
                         ?>
                         <tr>
                             <?php
-                            echo "<th scope=\"row\" id=\"id$studID\">" . $studObj->getId() . "</th>";
-                            echo "<td id=\"firstName$studID\">" . $studObj->getFirstName() . "</td>";
-                            echo "<td id=\"lastName$studID\">" . $studObj->getLastName() . "</td>";
-                            echo "<td id=\"email$studID\">" . $studObj->getEmail() . "</td>";
-                            echo "<td id=\"class$studID\">" . $studObj->getClass() . "</td>";
+                            echo "<th scope=\"row\">" . $studObj->getId() . "</th>";
+                            echo "<td>" . $studObj->getFirstName() . "</td>";
+                            echo "<td>" . $studObj->getLastName() . "</td>";
+                            echo "<td>" . $studObj->getEmail() . "</td>";
+                            echo "<td>" . $studObj->getClass() . "</td>";
                             ?>
-                            <td>
-                                <form method="GET" action="editStudent.php" class="editStudent">
-                                    <button type="submit" id="editStudent<?= $studObj->getId() ?>"
-                                            class="btn btn-success btn-md">
-                                        Edit
+                            <form method="GET" action="editGrade.php" class="editGrade">
+                                <?php
+                                if ($studObj->getGradeForCourse($course->getId()) != -1) {
+                                    echo "<td>" .
+                                        "<input type = \"text\" name='grade' maxlength='4' value = \"" . $studObj->getGradeForCourse($course->getId()) . "\"></td > ";
+                                } else {
+                                    echo "<td>" . "<input type=\"text\" name='grade' maxlength='4' value=\"No grade yet\"></td>";
+                                }
+                                ?>
+                                <td>
+                                    <button type="submit" class="btn btn-success btn-md">
+                                        Update grade
                                     </button>
-                                    <input type="hidden" name="studentId" value="<?= $studObj->getId() ?>">
-                                </form>
-                                <form method="GET" action="dismissStudent.php" class="dismissStudent"
-                                      id="dismissStudentForm<?= $studObj->getId() ?>">
-                                    <input type="hidden" name="studentId" value="<?= $studObj->getId() ?>">
-                                    <button type="button" class="btn btn-danger btn-md"
-                                            onclick="addConfirmationPopup(<?= $studObj->getId() ?>)">
-                                        Dismiss
-                                    </button>
-                                </form>
+                                    <input type="hidden" name="courseId" value="<?= $course->getId() ?>">
+                                    <input type="hidden" name="academicYear" value="<?= $academicYear ?>">
+                                    <input type="hidden" name="studentId" value="<?= $studID ?>">
+                            </form>
                             </td>
                         </tr>
                     <?php } ?>
                     </tbody>
                 </table>
+                <div class="line"></div>
             <?php } ?>
         <?php } ?>
     </div>
 </div>
 
+
 <!-- jQuery CDN -->
 <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
 <!-- Bootstrap Js CDN -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
 <script type="text/javascript">
     $(document).ready(function () {
         $('#sidebarCollapse').on('click', function () {
@@ -190,4 +191,3 @@ require_once('classes/Student.php');
 </script>
 </body>
 </html>
-

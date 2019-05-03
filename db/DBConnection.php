@@ -43,7 +43,6 @@ function insertStudent($firstName, $lastname, $email, $class, $course)
     $sql = "INSERT INTO student VALUES (NULL,\"$firstName\", \"$lastname\", \"$email\", \"$class\")";
     $conn = connectToDB();
     if ($conn->query($sql) === TRUE) {
-        //    TODO: get the id for current STUDENT & inseert into student2course
         $sql = "SELECT id FROM student WHERE email=\"" . $email . "\"";
         $result = $conn->query($sql);
         $studentId = -1;
