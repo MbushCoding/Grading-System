@@ -17,7 +17,7 @@ if (!isset($_SESSION['email'])) {
     <!-- Sidebar Holder -->
     <nav id="sidebar">
         <script type="text/javascript">
-            if (localStorage.getItem('#sidebar') == 'active'){
+            if (localStorage.getItem('#sidebar') == 'active') {
                 document.getElementById("sidebar").classList.add('active');
             }
         </script>
@@ -71,10 +71,6 @@ if (!isset($_SESSION['email'])) {
                 </a>
             </li>
         </ul>
-        <!--        <ul class="list-unstyled CTAs">-->
-        <!--            <li><a href="https://bootstrapious.com/tutorial/files/sidebar.zip" class="download">Download source</a></li>-->
-        <!--            <li><a href="https://bootstrapious.com/p/bootstrap-sidebar" class="article">Back to article</a></li>-->
-        <!--        </ul>-->
     </nav>
 
     <!-- Page Content Holder -->
@@ -86,14 +82,9 @@ if (!isset($_SESSION['email'])) {
                         <i class="glyphicon glyphicon-align-left"></i>
                         <span>Toggle Sidebar</span>
                     </button>
-                    <!--                </div>-->
-                    <!--                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">-->
                     <a href="logout.php">
                         <button type="button" class="btn btn-info navbar-btn" id="log-out-button">Log out</button>
                     </a>
-                    <!--
-                                        <ul class="nav navbar-nav navbar-right">
-                     </ul>-->
                 </div>
 
             </div>
@@ -110,9 +101,6 @@ if (!isset($_SESSION['email'])) {
             ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
             nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
             anim id est laborum.</p>
-
-        <div class="line"></div>
-
         <h2>Lorem Ipsum Dolor</h2>
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
             dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
@@ -152,8 +140,7 @@ if (!isset($_SESSION['email'])) {
             $('#sidebar').toggleClass('active');
             if ('active' == document.getElementById("sidebar").classList[0]) {
                 window.localStorage.setItem('#sidebar', 'active');
-            }
-            else{
+            } else {
                 window.localStorage.setItem('#sidebar', 'inactive');
             }
         });

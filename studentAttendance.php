@@ -75,10 +75,6 @@ require_once('classes/Student.php');
                 </a>
             </li>
         </ul>
-        <!--        <ul class="list-unstyled CTAs">-->
-        <!--            <li><a href="https://bootstrapious.com/tutorial/files/sidebar.zip" class="download">Download source</a></li>-->
-        <!--            <li><a href="https://bootstrapious.com/p/bootstrap-sidebar" class="article">Back to article</a></li>-->
-        <!--        </ul>-->
     </nav>
 
     <!-- Page Content Holder -->
@@ -91,7 +87,6 @@ require_once('classes/Student.php');
                         <span>Toggle Sidebar</span>
                     </button>
                 </div>
-                <!--                TODO: don't hide this on resize-->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="logout.php">Log out</a></li>
@@ -100,7 +95,34 @@ require_once('classes/Student.php');
 
             </div>
         </nav>
-
+        <div id="successfully-edited-student" class="modal">
+            <!-- Modal content -->
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <p class="modal-text">Successfully edited student</p>
+            </div>
+        </div>
+        <div id="unsuccessfully-edited-student" class="modal">
+            <!-- Modal content -->
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <p class="modal-text">Unsuccessfully edited student</p>
+            </div>
+        </div>
+        <div id="successfully-dismissed-student" class="modal">
+            <!-- Modal content -->
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <p class="modal-text">Successfully dismissed student</p>
+            </div>
+        </div>
+        <div id="unsuccessfully-dismissed-student" class="modal">
+            <!-- Modal content -->
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <p class="modal-text">Unsuccessfully dismissed student</p>
+            </div>
+        </div>
         <h2>Collapsible Sidebar Using Bootstrap 3</h2>
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
             dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
@@ -187,6 +209,40 @@ require_once('classes/Student.php');
             }
         });
     });
+
+    // Get the <span> element that closes the modal
+    //Check if the session variable is set,
+    <?php if (isset ($_SESSION['updatedStudent']) && $_SESSION['updatedStudent'] == 1){ ?>
+    var modal = document.getElementById('successfully-edited-student');
+    var span = document.getElementsByClassName("close")[0];
+    <? unset($_SESSION['updatedStudent']);
+    } else if (isset($_SESSION['updatedStudent'])){?>
+    var modal = document.getElementById('unsuccessfully-edited-student');
+    var span = document.getElementsByClassName("close")[1];
+    <?} unset($_SESSION['updatedStudent']);?>
+
+    <?php if (isset ($_SESSION['dismissStudent']) && $_SESSION['dismissStudent'] == 1){ ?>
+    var modal = document.getElementById('successfully-dismissed-student');
+    var span = document.getElementsByClassName("close")[2];
+    <? unset($_SESSION['dismissStudent']);
+    } else if (isset($_SESSION['dismissStudent'])){?>
+    var modal = document.getElementById('unsuccessfully-dismissed-student');
+    var span = document.getElementsByClassName("close")[3];
+    <?} unset($_SESSION['updatedStudent']);?>
+
+    // $_SESSION['dismissStudent'] = -1;
+    modal.style.display = "block";
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function () {
+        modal.style.display = "none";
+    };
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function (event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
 </script>
 </body>
 </html>

@@ -4,15 +4,15 @@ if (!isset($_SESSION['currentUser'])) {
     header("Location: login.php");
 }
 if (isset($_GET['studentId'])) {
-//    delete it from db
-    require_once ("db/DBConnection.php");
+    require_once("db/DBConnection.php");
     $sql = "DELETE FROM student where id=\"" . $_GET['studentId'] . "\"";
     echo $sql;
     $conn = connectToDB();
     if ($conn->query($sql) === TRUE) {
-        header('Location: studentAttendance.php');
+        $_SESSION['dismissStudent'] = 1;
     } else {
-//        set a global flag for display an error message
-        echo "An error occurred";
+        $_SESSION['dismissStudent'] = -1;
     }
+//    echo $_SESSION['dismissStudent'];
+    header('Location: studentAttendance.php');
 }

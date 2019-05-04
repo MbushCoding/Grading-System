@@ -49,7 +49,6 @@ function insertStudent($firstName, $lastname, $email, $class, $course)
         if ($result->num_rows > 0) {
             $studentId = $result->fetch_assoc()['id'];
         }
-        //echo $studentId;
         $sql = "SELECT id FROM course WHERE course_name=\"" . $course . "\"";
         $result = $conn->query($sql);
         $courseId = -1;
@@ -61,14 +60,14 @@ function insertStudent($firstName, $lastname, $email, $class, $course)
 //            Insert into student2course -> Enroll student
             $sql = "INSERT INTO student2course VALUES(" . $studentId . ", " . $courseId . ", '2018-2019')";
             if ($conn->query($sql) === TRUE) {
-                //    TODO: create a popup instead of using echos
-                echo 'Successfully added & enrolled student';
+                $conn->close();
+                $_SESSION['addUserSuccessfully'] = 1;
+                return;
             }
         }
-    } else {
-        //    TODO: create a popup instead of using echos
-        echo 'An error occurred';
     }
+    //An error occurred
     $conn->close();
+    $_SESSION['addUserSuccessfully'] = -1;
     return;
 }

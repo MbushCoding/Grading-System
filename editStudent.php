@@ -18,7 +18,6 @@ require_once('classes/Student.php');
 require_once('db/DBConnection.php');
 
 if (isset($_POST['firstName'])) {
-//    insert new values to db
     $sql = "UPDATE student SET first_name=\"" . $_POST['firstName'] . "\""
         . ", last_name=\"" . $_POST['lastName'] . "\""
         . ", email=\"" . $_POST['email'] . "\""
@@ -26,10 +25,11 @@ if (isset($_POST['firstName'])) {
         . " WHERE id = \"" . $_POST['id'] . "\"";
     $conn = connectToDB();
     if ($conn->query($sql) === TRUE) {
-        header('Location: studentAttendance.php');
+        $_SESSION['updatedStudent'] = 1;
     } else {
-        echo "FCKING error";
+        $_SESSION['updatedStudent'] = -1;
     }
+    header('Location: studentAttendance.php');
 }
 ?>
 <div class="wrapper">

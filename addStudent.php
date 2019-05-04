@@ -104,7 +104,22 @@ if (isset($_POST['email'])) {
             ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
             nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
             anim id est laborum.</p>
+        <div class="line"></div>
 
+        <div id="succesfully-added-student" class="modal">
+            <!-- Modal content -->
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <p class="modal-text">Successfully added student</p>
+            </div>
+        </div>
+        <div id="unsuccesfully-added-student" class="modal">
+            <!-- Modal content -->
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <p class="modal-text">Unsuccessfully added student</p>
+            </div>
+        </div>
         <form action="addStudent.php" method="POST">
             <div class="form-group">
                 <label for="addStudent-firstName">First name</label>
@@ -166,6 +181,29 @@ if (isset($_POST['email'])) {
             }
         });
     });
+
+    // Get the <span> element that closes the modal
+    //Check if the session variable is set,
+    <?php if (isset ($_SESSION['addUserSuccessfully']) && $_SESSION['addUserSuccessfully'] == 1){ ?>
+    var modal = document.getElementById('succesfully-added-student');
+    var span = document.getElementsByClassName("close")[0];
+    <? unset($_SESSION['addUserSuccessfully']);
+    } else if (isset($_SESSION['addUserSuccessfully'])){?>
+    var modal = document.getElementById('unsuccesfully-added-student');
+    var span = document.getElementsByClassName("close")[1];
+    <?} unset($_SESSION['addUserSuccessfully']);?>
+    modal.style.display = "block";
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function () {
+        modal.style.display = "none";
+    };
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function (event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
 </script>
 </body>
 </html>

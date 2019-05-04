@@ -89,7 +89,20 @@ $academicYear = '2018-2019';
 
             </div>
         </nav>
-
+        <div id="successfully-edited-grade" class="modal">
+            <!-- Modal content -->
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <p class="modal-text">Successfully edited grade</p>
+            </div>
+        </div>
+        <div id="unsuccessfully-edited-grade" class="modal">
+            <!-- Modal content -->
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <p class="modal-text">Unsuccessfully edited grade</p>
+            </div>
+        </div>
         <h2>Collapsible Sidebar Using Bootstrap 3</h2>
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
             dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
@@ -188,6 +201,29 @@ $academicYear = '2018-2019';
             }
         });
     });
+
+    <?php if (isset ($_SESSION['editedGrade']) && $_SESSION['editedGrade'] == 1){ ?>
+    var modal = document.getElementById('successfully-edited-grade');
+    var span = document.getElementsByClassName("close")[0];
+    <? unset($_SESSION['editedGrade']);
+    } else if (isset($_SESSION['editedGrade'])){?>
+    var modal = document.getElementById('unsuccessfully-edited-grade');
+    var span = document.getElementsByClassName("close")[1];
+    <?} unset($_SESSION['editedGrade']);?>
+
+    // $_SESSION['dismissStudent'] = -1;
+    modal.style.display = "block";
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function () {
+        modal.style.display = "none";
+    };
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function (event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
 </script>
 </body>
 </html>
