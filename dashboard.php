@@ -86,10 +86,8 @@ if (!isset($_SESSION['email'])) {
                         <button type="button" class="btn btn-info navbar-btn" id="log-out-button">Log out</button>
                     </a>
                 </div>
-
             </div>
         </nav>
-
         <h2>Collapsible Sidebar Using Bootstrap 3</h2>
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
             dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex

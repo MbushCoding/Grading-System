@@ -84,18 +84,15 @@ if (isset($_POST['email'])) {
     <div id="content">
         <nav class="navbar navbar-default">
             <div class="container-fluid">
-                <div class="navbar-header">
+                <div class="navbar-header" id="navbar-header">
                     <button type="button" id="sidebarCollapse" class="btn btn-info navbar-btn">
                         <i class="glyphicon glyphicon-align-left"></i>
                         <span>Toggle Sidebar</span>
                     </button>
+                    <a href="logout.php">
+                        <button type="button" class="btn btn-info navbar-btn" id="log-out-button">Log out</button>
+                    </a>
                 </div>
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a href="logout.php">Log out</a></li>
-                    </ul>
-                </div>
-
             </div>
         </nav>
         <h2>Add a student</h2>

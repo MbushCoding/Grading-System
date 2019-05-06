@@ -96,22 +96,17 @@ if (isset($_POST['firstName'])) {
     <div id="content">
         <nav class="navbar navbar-default">
             <div class="container-fluid">
-                <div class="navbar-header">
+                <div class="navbar-header" id="navbar-header">
                     <button type="button" id="sidebarCollapse" class="btn btn-info navbar-btn">
                         <i class="glyphicon glyphicon-align-left"></i>
                         <span>Toggle Sidebar</span>
                     </button>
+                    <a href="logout.php">
+                        <button type="button" class="btn btn-info navbar-btn" id="log-out-button">Log out</button>
+                    </a>
                 </div>
-                <!--                TODO: don't hide this on resize-->
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a href="logout.php">Log out</a></li>
-                    </ul>
-                </div>
-
             </div>
         </nav>
-
         <h2>Collapsible Sidebar Using Bootstrap 3</h2>
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
             dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex

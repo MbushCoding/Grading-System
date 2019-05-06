@@ -86,7 +86,6 @@ $academicYear = '2018-2019';
                         <button type="button" class="btn btn-info navbar-btn" id="log-out-button">Log out</button>
                     </a>
                 </div>
-
             </div>
         </nav>
         <div id="successfully-edited-grade" class="modal">
