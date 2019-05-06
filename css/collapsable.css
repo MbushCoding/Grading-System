@@ -86,6 +86,10 @@ i, span {
     display: inline-block;
 }
 
+#content {
+    width: 100%;
+}
+
 /* The Modal (background) */
 .modal {
     display: none; /* Hidden by default */
