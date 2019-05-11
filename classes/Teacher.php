@@ -27,22 +27,6 @@ class Teacher
     /**
      * @return mixed
      */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * @param mixed $id
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
-
-    /**
-     * @return mixed
-     */
     public function getFirstName()
     {
         return $this->firstName;
@@ -110,6 +94,47 @@ class Teacher
         }
         $conn->close();
         return -1;
+    }
+
+    //TODO: check if this is used somewhere
+    public function getStudentThesis($studentID)
+    {
+        require_once('db/DBConnection.php');
+        $sql = "SELECT DISTINCT thesis.student_id, thesis.title FROM thesis, student, student2course, course, teacher\n"
+            . "WHERE $studentID = student.id AND $studentID = student2course.student_id"
+            . " AND student2course.course_id = course.id AND course.teacher_id = \"" . $this->getId() . "\"";
+        echo $sql;
+        $conn = connectToDB();
+        $result = $conn->query($sql);
+//        $resultSet['studentID][ThesisTitle];
+        if ($result->num_rows > 0) {
+            $resultSet[0][0]=1;
+            $iterator = 0;
+            // output data of each row
+            while ($row = $result->fetch_assoc()) {
+                $resultSet[$iterator][0] = $row['student_id'];
+                $resultSet[$iterator++][1] = $row['title'];
+            }
+            return $resultSet;
+        }
+        $conn->close();
+        return -1;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param mixed $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
     }
 
     private function connect()

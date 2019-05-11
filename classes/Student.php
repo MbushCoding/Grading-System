@@ -114,6 +114,16 @@ class Student
         return $result;
     }
 
+    public function getThesisTitle(){
+        require_once('db/DBConnection.php');
+        $sql="SELECT title FROM thesis WHERE student_id=\"".$this->getId()."\"";
+        $conn = connectToDB();
+        $result = $conn->query($sql);
+        if ($result->num_rows == 1) {
+            return ($result->fetch_assoc())['title'];
+        }
+    }
+
     /**
      * @return mixed
      */

@@ -1,18 +1,21 @@
+<?php
+session_start();
+if (!isset($_SESSION['currentUser'])) {
+    header("Location: login.php");
+}
+require('classes/Teacher.php');
+require_once('classes/Course.php');
+require_once('classes/Student.php');
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Dashboard</title>
+    <title>Students thesis</title>
     <link rel="stylesheet" href="css/collapsable.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 </head>
 <body>
-<?php
-session_start();
-if (!isset($_SESSION['email'])) {
-    header("Location: login.php");
-}
-?>
 <div class="wrapper">
     <!-- Sidebar Holder -->
     <nav id="sidebar">
@@ -88,41 +91,54 @@ if (!isset($_SESSION['email'])) {
                 </div>
             </div>
         </nav>
-        <h2>Collapsible Sidebar Using Bootstrap 3</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-            ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-            nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
-            anim id est laborum.</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-            ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-            nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
-            anim id est laborum.</p>
-        <h2>Lorem Ipsum Dolor</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-            ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-            nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
-            anim id est laborum.</p>
-
+        <h2>Students thesis</h2>
         <div class="line"></div>
-
-        <h2>Lorem Ipsum Dolor</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-            ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-            nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
-            anim id est laborum.</p>
-
-        <div class="line"></div>
-
-        <h3>Lorem Ipsum Dolor</h3>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-            ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-            nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
-            anim id est laborum.</p>
+        <?php
+        $teacher = unserialize($_SESSION['currentUser']);
+        $courses = $teacher->getCourses();
+        foreach ($courses as $courseName) {
+            $course = new Course();
+            $course->setCourseName($courseName);
+            $academicYear = '2018-2019';
+            $students = unserialize($course->getEnrolledStudentsForAcademicYear($academicYear));
+            if (-1 == $students) {
+                ?>
+                <h1>No student enrolled @ <?php echo $courseName . " " . $academicYear ?></h1>
+            <?php } else {
+                ?>
+                <h1>Students enrolled @ <?php echo $courseName . " " . $academicYear ?></h1>
+                <table class="table">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Student ID</th>
+                        <th scope="col">First name</th>
+                        <th scope="col">Last name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Class</th>
+                        <th scope="col">Thesis</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?
+                    foreach ($students as $serializedStudent) {
+                        $student = (unserialize($serializedStudent));
+                        ?>
+                        <tr>
+                            <?php
+                            echo "<th scope=\"row\">" . $student->getId() . "</th>";
+                            echo "<td>" . $student->getFirstName() . "</td>";
+                            echo "<td>" . $student->getLastName() . "</td>";
+                            echo "<td>" . $student->getEmail() . "</td>";
+                            echo "<td>" . $student->getClass() . "</td>";
+                            echo "<td>" . $student->getThesisTitle() . "</td>";
+                            ?>
+                        </tr>
+                    <?php } ?>
+                    </tbody>
+                </table>
+            <?php } ?>
+        <?php }
+        ?>
     </div>
 </div>
 
@@ -146,4 +162,3 @@ if (!isset($_SESSION['email'])) {
 </script>
 </body>
 </html>
-
