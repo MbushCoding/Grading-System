@@ -25,7 +25,7 @@ require_once('classes/Student.php');
             }
         </script>
         <div class="sidebar-header">
-            <h3>Teacher Dashboard</h3>
+            <h3><b>Teacher Dashboard</b></h3>
             <strong>TD</strong>
         </div>
 

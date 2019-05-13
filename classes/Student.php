@@ -99,7 +99,8 @@ class Student
         $conn = connectToDB();
         $result = $conn->query($sql);
         if ($result->num_rows == 1) {
-            return ($result->fetch_assoc())['grade'];
+            $result=$result->fetch_assoc();
+            return $result['grade'];
         }
         return -1;
     }
@@ -120,7 +121,7 @@ class Student
         $conn = connectToDB();
         $result = $conn->query($sql);
         if ($result->num_rows == 1) {
-            return ($result->fetch_assoc())['title'];
+            return ($result->fetch_assoc()['title']);
         }
     }
 

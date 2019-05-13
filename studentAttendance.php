@@ -1,3 +1,9 @@
+<?php
+session_start();
+if (!isset($_SESSION['currentUser'])) {
+    header("Location: login.php");
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,15 +14,6 @@
     <script src="js/scripts.js"></script>
 </head>
 <body>
-<?php
-session_start();
-if (!isset($_SESSION['currentUser'])) {
-    header("Location: login.php");
-}
-require('classes/Teacher.php');
-require_once('classes/Course.php');
-require_once('classes/Student.php');
-?>
 <div class="wrapper">
     <!-- Sidebar Holder -->
     <nav id="sidebar">
@@ -26,7 +23,7 @@ require_once('classes/Student.php');
             }
         </script>
         <div class="sidebar-header">
-            <h3>Teacher Dashboard</h3>
+            <h3><b>Teacher Dashboard</b></h3>
             <strong>TD</strong>
         </div>
 
@@ -100,14 +97,11 @@ require_once('classes/Student.php');
                 <p class="modal-text">Unsuccessfully dismissed student</p>
             </div>
         </div>
-<!--        <h2>Collapsible Sidebar Using Bootstrap 3</h2>-->
-<!--        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et-->
-<!--            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex-->
-<!--            ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat-->
-<!--            nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit-->
-<!--            anim id est laborum.</p>-->
         <div class="line"></div>
         <?php
+        require_once('classes/Teacher.php');
+        require_once('classes/Course.php');
+        require_once('classes/Student.php');
         $teacher = unserialize($_SESSION['currentUser']);
         $courses = $teacher->getCourses();
         foreach ($courses as $courseName) {

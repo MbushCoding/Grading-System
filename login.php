@@ -1,5 +1,15 @@
 <?php
 session_start();
+require('db/DBConnection.php');
+if (isset ($_SESSION['email'])) {
+    header("Location: dashboard.php");
+} else if (isset($_POST['email']) && isset($_POST['password'])) {
+    if (1 == checkEmailAndPassword($_POST['email'], $_POST['password'])) {
+        header("Location: dashboard.php");
+    } else {
+        $_SESSION['loginError'] = 1;
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="ro">
@@ -32,18 +42,6 @@ session_start();
     <script src="js/scripts.js"></script>
 </head>
 <body>
-<?php
-require('db/DBConnection.php');
-if (isset ($_SESSION['email'])) {
-    header("Location: dashboard.php");
-} else if (isset($_POST['email']) && isset($_POST['password'])) {
-    if (1 == checkEmailAndPassword($_POST['email'], $_POST['password'])) {
-        header("Location: dashboard.php");
-    } else {
-        $_SESSION['loginError'] = 1;
-    }
-}
-?>
 <div class="limiter">
     <div class="container-login100">
         <div class="wrap-login100">

@@ -1,12 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Student attendance</title>
-    <link rel="stylesheet" href="css/collapsable.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-</head>
-<body>
 <?php
 session_start();
 if (!isset($_SESSION['currentUser'])) {
@@ -16,7 +7,6 @@ require('classes/Teacher.php');
 require_once('classes/Course.php');
 require_once('classes/Student.php');
 require_once('db/DBConnection.php');
-
 if (isset($_POST['firstName'])) {
     $sql = "UPDATE student SET first_name=\"" . $_POST['firstName'] . "\""
         . ", last_name=\"" . $_POST['lastName'] . "\""
@@ -32,6 +22,15 @@ if (isset($_POST['firstName'])) {
     header('Location: studentAttendance.php');
 }
 ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Student attendance</title>
+    <link rel="stylesheet" href="css/collapsable.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+<body>
 <div class="wrapper">
     <!-- Sidebar Holder -->
     <nav id="sidebar">
@@ -41,12 +40,12 @@ if (isset($_POST['firstName'])) {
             }
         </script>
         <div class="sidebar-header">
-            <h3>Teacher Dashboard</h3>
+            <h3><b>Teacher Dashboard</b></h3>
             <strong>TD</strong>
         </div>
 
         <ul class="list-unstyled components">
-            <li class="active">
+            <li>
                 <a href="dashboard.php" aria-expanded="false">
                     <i class="glyphicon glyphicon-home"></i>
                     Home
@@ -55,11 +54,11 @@ if (isset($_POST['firstName'])) {
             <li>
                 <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">
                     <i class="glyphicon glyphicon-briefcase"></i>
-                    Grade book
+                    <b>Grade book</b>
                 </a>
                 <ul class="collapse list-unstyled" id="homeSubmenu">
                     <li><a href="addStudent.php">Add student</a></li>
-                    <li><a href="studentAttendance.php">Student attendance</a></li>
+                    <li class="active"><a href="studentAttendance.php">Student attendance</a></li>
                     <li><a href="grades.php">Grades</a></li>
                 </ul>
             </li>

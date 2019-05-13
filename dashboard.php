@@ -1,3 +1,9 @@
+<?php
+session_start();
+if (!isset($_SESSION['email'])) {
+    header("Location: login.php");
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,12 +13,6 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 </head>
 <body>
-<?php
-session_start();
-if (!isset($_SESSION['email'])) {
-    header("Location: login.php");
-}
-?>
 <div class="wrapper">
     <!-- Sidebar Holder -->
     <nav id="sidebar">
@@ -22,7 +22,7 @@ if (!isset($_SESSION['email'])) {
             }
         </script>
         <div class="sidebar-header">
-            <h3>Teacher Dashboard</h3>
+            <h3><b>Teacher Dashboard</b></h3>
             <strong>TD</strong>
         </div>
 

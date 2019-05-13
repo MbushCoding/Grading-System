@@ -1,12 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Dashboard</title>
-    <link rel="stylesheet" href="css/collapsable.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-</head>
-<body>
 <?php
 session_start();
 require_once('classes/Teacher.php');
@@ -19,6 +10,15 @@ if (isset($_POST['email'])) {
     insertStudent($_POST['firstName'], $_POST['lastName'], $_POST['email'], $_POST['class'], $_POST['course']);
 }
 ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="css/collapsable.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+<body>
 <div class="wrapper">
     <!-- Sidebar Holder -->
     <nav id="sidebar">
@@ -28,7 +28,7 @@ if (isset($_POST['email'])) {
             }
         </script>
         <div class="sidebar-header">
-            <h3>Teacher Dashboard</h3>
+            <h3><b>Teacher Dashboard</b></h3>
             <strong>TD</strong>
         </div>
 
@@ -110,7 +110,7 @@ if (isset($_POST['email'])) {
                 <label for="addStudent-email">Email address</label>
                 <input type="email" class="form-control" id="addStudent-email" placeholder="Enter email" name="email"
                        required>
-            </div>
+            </div> 
             <div class="form-group">
                 <label for="course">Course</label>
                 <select class="form-control" id="course" name="course" required>

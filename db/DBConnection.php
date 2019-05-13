@@ -38,9 +38,9 @@ function checkEmailAndPassword($email, $password)
     return 0;
 }
 
-function insertStudent($firstName, $lastname, $email, $class, $course)
+function insertStudent($firstName, $lastName, $email, $class, $course)
 {
-    $sql = "INSERT INTO student VALUES (NULL,\"$firstName\", \"$lastname\", \"$email\", \"$class\")";
+    $sql = "INSERT INTO student VALUES (NULL,\"$firstName\", \"$lastName\", \"$email\", \"$class\")";
     $conn = connectToDB();
     if ($conn->query($sql) === TRUE) {
         $sql = "SELECT id FROM student WHERE email=\"" . $email . "\"";
@@ -55,7 +55,6 @@ function insertStudent($firstName, $lastname, $email, $class, $course)
         if ($result->num_rows > 0) {
             $courseId = $result->fetch_assoc()['id'];
         }
-        // echo $courseId;
         if (-1 != $studentId && -1 != $courseId) {
 //            Insert into student2course -> Enroll student
             $sql = "INSERT INTO student2course VALUES(" . $studentId . ", " . $courseId . ", '2018-2019')";

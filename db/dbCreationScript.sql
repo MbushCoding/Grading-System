@@ -41,6 +41,7 @@ CREATE TABLE IF NOT EXISTS student2course
 );
 
 # TODO: need to fix '' case
+# TODO :need to fix CHECK constraint support for mysql
 CREATE TABLE IF NOT EXISTS grade_book
 (
     academic_year ENUM ('2019-2020', '2018-2019', '2017-2018', '2016-2017') NOT NULL,
@@ -49,7 +50,8 @@ CREATE TABLE IF NOT EXISTS grade_book
     grade         DOUBLE(4, 2),
     PRIMARY KEY (student_id, course_id),
     FOREIGN KEY (student_id) REFERENCES student (id) ON DELETE CASCADE,
-    FOREIGN KEY (course_id) REFERENCES course (id) ON DELETE CASCADE
+    FOREIGN KEY (course_id) REFERENCES course (id) ON DELETE CASCADE,
+    CONSTRAINT gradeBookGradeValid CHECK (grade > 0 AND grade <= 10)
 );
 
 CREATE TABLE IF NOT EXISTS thesis
@@ -61,9 +63,6 @@ CREATE TABLE IF NOT EXISTS thesis
 
 ALTER TABLE student
     ADD CONSTRAINT studentEmailUnique UNIQUE (email);
-
-ALTER TABLE grade_book
-    ADD CONSTRAINT gradeBookGradeValid CHECK (grade > 0 AND grade <= 10);
 
 INSERT INTO teacher
 VALUES (NULL, "John", "Smith", "123", "john.smith@mail.com");

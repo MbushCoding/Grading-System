@@ -1,3 +1,10 @@
+<?php
+session_start();
+if (!isset($_SESSION['email'])) {
+    header("Location: login.php");
+}
+$academicYear = '2018-2019';
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,13 +14,6 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 </head>
 <body>
-<?php
-session_start();
-if (!isset($_SESSION['email'])) {
-    header("Location: login.php");
-}
-$academicYear = '2018-2019';
-?>
 <div class="wrapper">
     <!-- Sidebar Holder -->
     <nav id="sidebar">
@@ -23,7 +23,7 @@ $academicYear = '2018-2019';
             }
         </script>
         <div class="sidebar-header">
-            <h3>Teacher Dashboard</h3>
+            <h3><b>Teacher Dashboard</b></h3>
             <strong>TD</strong>
         </div>
 
@@ -46,7 +46,7 @@ $academicYear = '2018-2019';
                 </ul>
             </li>
             <li>
-                <a href="#">
+                <a href="studentsThesis.php">
                     <i class="glyphicon glyphicon-link"></i>
                     Students thesis
                 </a>
@@ -82,17 +82,7 @@ $academicYear = '2018-2019';
                 <p class="modal-text">Unsuccessfully edited grade</p>
             </div>
         </div>
-        <h2>Collapsible Sidebar Using Bootstrap 3</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-            ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-            nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
-            anim id est laborum.</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-            ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-            nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
-            anim id est laborum.</p>
+
         <div class="line"></div>
         <?php
         require_once('classes/Teacher.php');
