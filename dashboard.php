@@ -43,31 +43,11 @@ if (!isset($_SESSION['email'])) {
                     <li><a href="studentAttendance.php">Student attendance</a></li>
                     <li><a href="grades.php">Grades</a></li>
                 </ul>
-                <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">
-                    <i class="glyphicon glyphicon-duplicate"></i>
-                    Reports
-                </a>
-                <ul class="collapse list-unstyled" id="pageSubmenu">
-                    <li><a href="#">Schoolar situation</a></li>
-                    <li><a href="#">Teaching activity</a></li>
-                </ul>
             </li>
             <li>
                 <a href="studentsThesis.php">
                     <i class="glyphicon glyphicon-link"></i>
                     Students thesis
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <i class="glyphicon glyphicon-paperclip"></i>
-                    Course files
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <i class="glyphicon glyphicon-send"></i>
-                    Email access
                 </a>
             </li>
         </ul>

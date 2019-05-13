@@ -37,38 +37,18 @@ $academicYear = '2018-2019';
             <li>
                 <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">
                     <i class="glyphicon glyphicon-briefcase"></i>
-                    Grade book
+                    <b>Grade book</b>
                 </a>
                 <ul class="list-unstyled" id="homeSubmenu">
                     <li><a href="addStudent.php">Add student</a></li>
                     <li><a href="studentAttendance.php">Student attendance</a></li>
-                    <li><a href="grades.php"><b>Grades</b></a></li>
-                </ul>
-                <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">
-                    <i class="glyphicon glyphicon-duplicate"></i>
-                    Reports
-                </a>
-                <ul class="collapse list-unstyled" id="pageSubmenu">
-                    <li><a href="#">Schoolar situation</a></li>
-                    <li><a href="#">Teaching activity</a></li>
+                    <li class="active"><a href="grades.php"><b>Grades</b></a></li>
                 </ul>
             </li>
             <li>
                 <a href="#">
                     <i class="glyphicon glyphicon-link"></i>
                     Students thesis
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <i class="glyphicon glyphicon-paperclip"></i>
-                    Course files
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <i class="glyphicon glyphicon-send"></i>
-                    Email access
                 </a>
             </li>
         </ul>

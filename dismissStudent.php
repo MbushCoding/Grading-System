@@ -13,6 +13,5 @@ if (isset($_GET['studentId'])) {
     } else {
         $_SESSION['dismissStudent'] = -1;
     }
-//    echo $_SESSION['dismissStudent'];
     header('Location: studentAttendance.php');
 }
